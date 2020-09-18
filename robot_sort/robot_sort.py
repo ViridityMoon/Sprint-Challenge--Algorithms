@@ -97,7 +97,38 @@ class SortingRobot:
         Sort the robot's list.
         """
         # Fill this out
-        pass
+
+        # we have sorted the full list if we can't go right anymore
+        if self.can_move_right() is False:
+            return self._list
+
+        # pick up the item at position
+        self.swap_item()
+
+        # move to the right while we can
+        while self.can_move_right():
+            self.move_right()
+
+            # swap if held item is greater
+            if self.compare_item() == 1:
+                self.swap_item()
+
+        # move to the left while we can
+        while self.can_move_left():
+            self.move_left()
+
+            # when we reach the start of the list
+            if self.compare_item() == None:
+                # place the smallest number
+                self.swap_item()
+                # terminate stack instance
+                break
+
+        # move to next index (the left values are already sorted)
+        self.move_right()
+
+        # recursively invoke again
+        self.sort()
 
 
 if __name__ == "__main__":
